@@ -23,7 +23,7 @@
     ]
   },
   "scripts": {
-    "build": "NODE_ENV=production webpack",
+    "build": "NODE_ENV=production NODE_OPTIONS=--openssl-legacy-provider webpack",
     "test": "jest",
     "format:fix": "eslint src/** --fix",
     "format:check": "eslint src/**"
