@@ -39,7 +39,8 @@ function printReport(expenses: Expense[]) {
   process.stdout.write("Expenses: " + new Date().toISOString().substr(0, 10) + "\n")
 
   for (const expense of expenses) {
-    if (expense.key == "dinner" || expense.key == "breakfast") {
+    const isMeal = expense.key == "dinner" || expense.key == "breakfast";
+    if (isMeal) {
       mealExpenses += expense.amount
     }
 
