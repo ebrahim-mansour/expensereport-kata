@@ -47,7 +47,7 @@ function calculateMealExpenses(expense: Expense, mealExpenses: number) {
   return mealExpenses;
 }
 
-function printReport(expenses: Expense[]) {
+function printReport(expenses: Expense[]): void {
   let totalExpenses: number = 0
   let mealExpenses: number = 0
 
