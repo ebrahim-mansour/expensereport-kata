@@ -32,6 +32,14 @@ class Expense {
   }
 }
 
+function calculateMealExpenses(expense: Expense, mealExpenses: number) {
+  const isMeal = expense.key == "dinner" || expense.key == "breakfast";
+  if (isMeal) {
+    mealExpenses += expense.amount;
+  }
+  return mealExpenses;
+}
+
 function printReport(expenses: Expense[]) {
   let totalExpenses: number = 0
   let mealExpenses: number = 0
@@ -39,10 +47,7 @@ function printReport(expenses: Expense[]) {
   process.stdout.write("Expenses: " + new Date().toISOString().substr(0, 10) + "\n")
 
   for (const expense of expenses) {
-    const isMeal = expense.key == "dinner" || expense.key == "breakfast";
-    if (isMeal) {
-      mealExpenses += expense.amount
-    }
+    mealExpenses = calculateMealExpenses(expense, mealExpenses);
 
     const mealOverExpensesMarker = expense.key == "dinner" && expense.amount > 5000 || expense.key == "breakfast" && expense.amount > 1000 ? "X" : " "
 
@@ -56,3 +61,4 @@ function printReport(expenses: Expense[]) {
 }
 
 export {sumTwoValues, printHelloWorld, printReport, Expense, ExpenseType}
+
