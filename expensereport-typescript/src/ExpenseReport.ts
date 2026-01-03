@@ -8,6 +8,19 @@ const printHelloWorld = (): void => {
 
 type ExpenseType = "dinner" | "breakfast" | "car-rental"
 
+type Dinner = {
+  type: "dinner",
+  name: "Dinner"
+}
+type Breakfast = {
+  type: "breakfast"
+  name: "Breakfast"
+}
+type CarRental = {
+  type: "car-rental"
+  name: "Car Rental"
+}
+
 class Expense {
   type: ExpenseType
   amount: number
