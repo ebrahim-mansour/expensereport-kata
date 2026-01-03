@@ -49,7 +49,9 @@ function printReport(expenses: Expense[]) {
   for (const expense of expenses) {
     mealExpenses = calculateMealExpenses(expense, mealExpenses);
 
-    const mealOverExpensesMarker = expense.key == "dinner" && expense.amount > 5000 || expense.key == "breakfast" && expense.amount > 1000 ? "X" : " "
+    const isDinnerOver = expense.key == "dinner" && expense.amount > 5000;
+    const isBreakFastOver = expense.key == "breakfast" && expense.amount > 1000;
+    const mealOverExpensesMarker = isDinnerOver || isBreakFastOver ? "X" : " "
 
     process.stdout.write(expense.name + "\t" + expense.amount + "\t" + mealOverExpensesMarker + "\n")
 
