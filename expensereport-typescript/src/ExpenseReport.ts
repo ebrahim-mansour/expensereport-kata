@@ -23,7 +23,6 @@ function printReport(expenses: Expense[]) {
 
   process.stdout.write("Expenses: " + new Date().toISOString().substr(0, 10) + "\n")
 
-
   for (const expense of expenses) {
     if (expense.type == "dinner" || expense.type == "breakfast") {
       mealExpenses += expense.amount
