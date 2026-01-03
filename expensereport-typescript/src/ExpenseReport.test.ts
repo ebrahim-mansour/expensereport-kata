@@ -8,7 +8,7 @@ describe(`ExpenseReport`, () => {
             return true;
         })
         printReport([
-          new Expense("dinner", 5001)
+          new Expense({ key: "dinner", name: "Dinner" }, 5001)
         ])
         expect(interceptedOutput).toEqual(`Expenses: 2026-01-03
 Dinner	5001	X
@@ -24,7 +24,7 @@ Total Expenses: 5001
             return true;
         })
         printReport([
-          new Expense("breakfast", 1001)
+          new Expense({ key: "breakfast", name: "Breakfast" }, 1001)
         ])
         expect(interceptedOutput).toEqual(`Expenses: 2026-01-03
 Breakfast	1001	X
@@ -41,12 +41,12 @@ Total Expenses: 1001
         })
         
         printReport([
-          new Expense("dinner", 5000),      // At threshold, no marker
-          new Expense("dinner", 5001),      // Over threshold, with marker
-          new Expense("breakfast", 1000),    // At threshold, no marker
-          new Expense("breakfast", 1001),    // Over threshold, with marker
-          new Expense("car-rental", 5000),   // Non-meal expense
-          new Expense("breakfast", 500),     // Under threshold, no marker
+          new Expense({ key: "dinner", name: "Dinner" }, 5000),      // At threshold, no marker
+          new Expense({ key: "dinner", name: "Dinner" }, 5001),      // Over threshold, with marker
+          new Expense({ key: "breakfast", name: "Breakfast" }, 1000),    // At threshold, no marker
+          new Expense({ key: "breakfast", name: "Breakfast" }, 1001),    // Over threshold, with marker
+          new Expense({ key: "car-rental", name: "Car Rental" }, 5000),   // Non-meal expense
+          new Expense({ key: "breakfast", name: "Breakfast" }, 500),     // Under threshold, no marker
         ])
         
         expect(interceptedOutput).toEqual(`Expenses: 2026-01-03

@@ -6,26 +6,28 @@ const printHelloWorld = (): void => {
   process.stdout.write(message);
 }
 
-type ExpenseType = "dinner" | "breakfast" | "car-rental"
+type ExpenseType = Dinner | Breakfast | CarRental
 
 type Dinner = {
-  type: "dinner",
+  key: "dinner",
   name: "Dinner"
 }
 type Breakfast = {
-  type: "breakfast"
+  key: "breakfast"
   name: "Breakfast"
 }
 type CarRental = {
-  type: "car-rental"
+  key: "car-rental"
   name: "Car Rental"
 }
 
 class Expense {
-  type: ExpenseType
+  key: ExpenseType["key"]
+  name: ExpenseType["name"]
   amount: number
   constructor(type: ExpenseType, amount: number) {
-    this.type = type
+    this.key = type.key
+    this.name = type.name
     this.amount = amount
   }
 }
@@ -37,26 +39,13 @@ function printReport(expenses: Expense[]) {
   process.stdout.write("Expenses: " + new Date().toISOString().substr(0, 10) + "\n")
 
   for (const expense of expenses) {
-    if (expense.type == "dinner" || expense.type == "breakfast") {
+    if (expense.key == "dinner" || expense.key == "breakfast") {
       mealExpenses += expense.amount
     }
 
-    let expenseName = ""
-    switch (expense.type) {
-      case "dinner":
-        expenseName = "Dinner"
-        break
-      case "breakfast":
-        expenseName = "Breakfast"
-        break
-      case "car-rental":
-        expenseName = "Car Rental"
-        break
-    }
+    const mealOverExpensesMarker = expense.key == "dinner" && expense.amount > 5000 || expense.key == "breakfast" && expense.amount > 1000 ? "X" : " "
 
-    const mealOverExpensesMarker = expense.type == "dinner" && expense.amount > 5000 || expense.type == "breakfast" && expense.amount > 1000 ? "X" : " "
-
-    process.stdout.write(expenseName + "\t" + expense.amount + "\t" + mealOverExpensesMarker + "\n")
+    process.stdout.write(expense.name + "\t" + expense.amount + "\t" + mealOverExpensesMarker + "\n")
 
     totalExpenses += expense.amount
   }
