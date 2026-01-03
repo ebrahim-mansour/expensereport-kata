@@ -25,10 +25,17 @@ class Expense {
   key: ExpenseType["key"]
   name: ExpenseType["name"]
   amount: number
+  mealOverExpensesMarker: string
   constructor(type: ExpenseType, amount: number) {
     this.key = type.key
     this.name = type.name
     this.amount = amount
+  }
+
+  get mealAndOverExpensesThreshold(): string {
+    const isDinnerOver = this.key == "dinner" && this.amount > 5000;
+    const isBreakFastOver = this.key == "breakfast" && this.amount > 1000;
+    return isDinnerOver || isBreakFastOver ? "X" : " ";
   }
 }
 
@@ -48,14 +55,11 @@ function printReport(expenses: Expense[]) {
 
   for (const expense of expenses) {
     mealExpenses = calculateMealExpenses(expense, mealExpenses);
-
-    const isDinnerOver = expense.key == "dinner" && expense.amount > 5000;
-    const isBreakFastOver = expense.key == "breakfast" && expense.amount > 1000;
-    const mealOverExpensesMarker = isDinnerOver || isBreakFastOver ? "X" : " "
-
-    process.stdout.write(expense.name + "\t" + expense.amount + "\t" + mealOverExpensesMarker + "\n")
-
     totalExpenses += expense.amount
+  }
+
+  for (const expense of expenses) {
+    process.stdout.write(expense.name + "\t" + expense.amount + "\t" + expense.mealAndOverExpensesThreshold + "\n")
   }
 
   process.stdout.write("Meal Expenses: " + mealExpenses + "\n")
