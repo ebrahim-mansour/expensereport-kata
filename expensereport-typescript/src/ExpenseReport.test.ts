@@ -16,6 +16,22 @@ Meal Expenses: 5001
 Total Expenses: 5001
 `)
     })
+
+    it(`should print the correct output for a breakfast expense`, () => {
+        let interceptedOutput = ""
+        jest.spyOn(process.stdout, "write").mockImplementation((output: string): boolean => {
+            interceptedOutput += output
+            return true;
+        })
+        printReport([
+          new Expense("breakfast", 1001)
+        ])
+        expect(interceptedOutput).toEqual(`Expenses: 2026-01-03
+Breakfast	1001	X
+Meal Expenses: 1001
+Total Expenses: 1001
+`)
+    })
 })
 
 describe(`given I have this test suite`, () => {
