@@ -1,4 +1,4 @@
-import { printHelloWorld, printReport, sumTwoValues, Expense, ExpenseType } from './ExpenseReport'
+import { printHelloWorld, printReport, sumTwoValues, Expense } from './ExpenseReport'
 
 describe(`ExpenseReport`, () => {
     it(`should keep its original behavior`, () => {
@@ -31,6 +31,35 @@ Breakfast	1001	X
 Meal Expenses: 1001
 Total Expenses: 1001
 `)
+    })
+
+    it(`should print report with various expense types and amounts`, () => {
+        let interceptedOutput = ""
+        jest.spyOn(process.stdout, "write").mockImplementation((output: string): boolean => {
+            interceptedOutput += output
+            return true;
+        })
+        
+        printReport([
+          new Expense("dinner", 5000),      // At threshold, no marker
+          new Expense("dinner", 5001),      // Over threshold, with marker
+          new Expense("breakfast", 1000),    // At threshold, no marker
+          new Expense("breakfast", 1001),    // Over threshold, with marker
+          new Expense("car-rental", 5000),   // Non-meal expense
+          new Expense("breakfast", 500),     // Under threshold, no marker
+        ])
+        
+        expect(interceptedOutput).toEqual(`Expenses: 2026-01-03
+Dinner	5000	 
+Dinner	5001	X
+Breakfast	1000	 
+Breakfast	1001	X
+Car Rental	5000	 
+Breakfast	500	 
+Meal Expenses: 12502
+Total Expenses: 17502
+`)
+
     })
 })
 
