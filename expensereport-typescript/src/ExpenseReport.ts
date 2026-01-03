@@ -21,6 +21,9 @@ type CarRental = {
   name: "Car Rental"
 }
 
+const DINNER_THRESHOLD = 5000;
+const BREAKFAST_THRESHOLD = 1000;
+
 class Expense {
   key: ExpenseType["key"]
   name: ExpenseType["name"]
@@ -33,8 +36,8 @@ class Expense {
   }
 
   get mealAndOverExpensesThreshold(): string {
-    const isDinnerOver = this.key == "dinner" && this.amount > 5000;
-    const isBreakFastOver = this.key == "breakfast" && this.amount > 1000;
+    const isDinnerOver = this.key == "dinner" && this.amount > DINNER_THRESHOLD;
+    const isBreakFastOver = this.key == "breakfast" && this.amount > BREAKFAST_THRESHOLD;
     return isDinnerOver || isBreakFastOver ? "X" : " ";
   }
 }
