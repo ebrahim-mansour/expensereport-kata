@@ -6,11 +6,12 @@ const printHelloWorld = (): void => {
   process.stdout.write(message);
 }
 
-type ExpenseType = Dinner | Breakfast | CarRental
+type ExpenseType = Dinner | Breakfast | Lunch | CarRental
 
 enum Meals {
   Dinner = "dinner",
-  Breakfast = "breakfast"
+  Breakfast = "breakfast",
+  Lunch = "lunch"
 }
 
 type Dinner = {
@@ -20,6 +21,10 @@ type Dinner = {
 type Breakfast = {
   key: Meals.Breakfast
   name: "Breakfast"
+}
+type Lunch = {
+  key: Meals.Lunch
+  name: "Lunch"
 }
 type CarRental = {
   key: "car-rental"
@@ -50,7 +55,7 @@ class Expense {
 }
 
 function calculateMealExpenses(expense: Expense, mealExpenses: number) {
-  const isMeal = expense.key === Meals.Dinner || expense.key === Meals.Breakfast;
+  const isMeal = expense.key === Meals.Dinner || expense.key === Meals.Breakfast || expense.key === Meals.Lunch;
   if (isMeal) {
     mealExpenses += expense.amount;
   }

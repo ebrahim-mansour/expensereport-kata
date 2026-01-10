@@ -35,6 +35,22 @@ Total Expenses: 1001
 `)
     })
 
+    it(`should print the correct output for a lunch expense`, () => {
+        let interceptedOutput = ""
+        jest.spyOn(process.stdout, "write").mockImplementation((output: string): boolean => {
+            interceptedOutput += output
+            return true;
+        })
+        printReport([
+          new Expense({ key: Meals.Lunch, name: "Lunch" }, 500)
+        ])
+        expect(interceptedOutput).toEqual(`Expenses: ${today}
+Lunch	500	 
+Meal Expenses: 500
+Total Expenses: 500
+`)
+    })
+
     it(`should print report with various expense types and amounts`, () => {
         let interceptedOutput = ""
         jest.spyOn(process.stdout, "write").mockImplementation((output: string): boolean => {
