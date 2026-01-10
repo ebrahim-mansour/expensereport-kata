@@ -34,6 +34,7 @@ type CarRental = {
 const EXPENSE_LIMITS = {
   DINNER: 5000,
   BREAKFAST: 1000,
+  LUNCH: 2000,
 }
 
 class Expense {
@@ -50,7 +51,8 @@ class Expense {
   get mealAndOverExpensesThreshold(): string {
     const isDinnerOver = this.key === Meals.Dinner && this.amount > EXPENSE_LIMITS.DINNER;
     const isBreakFastOver = this.key === Meals.Breakfast && this.amount > EXPENSE_LIMITS.BREAKFAST;
-    return isDinnerOver || isBreakFastOver ? "X" : " ";
+    const isLunchOver = this.key === Meals.Lunch && this.amount > EXPENSE_LIMITS.LUNCH;
+    return isDinnerOver || isBreakFastOver || isLunchOver ? "X" : " ";
   }
 }
 

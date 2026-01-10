@@ -35,19 +35,51 @@ Total Expenses: 1001
 `)
     })
 
-    it(`should print the correct output for a lunch expense`, () => {
+    it(`should print the correct output for a lunch expense under limit`, () => {
         let interceptedOutput = ""
         jest.spyOn(process.stdout, "write").mockImplementation((output: string): boolean => {
             interceptedOutput += output
             return true;
         })
         printReport([
-          new Expense({ key: Meals.Lunch, name: "Lunch" }, 500)
+          new Expense({ key: Meals.Lunch, name: "Lunch" }, 1999)
         ])
         expect(interceptedOutput).toEqual(`Expenses: ${today}
-Lunch	500	 
-Meal Expenses: 500
-Total Expenses: 500
+Lunch	1999	 
+Meal Expenses: 1999
+Total Expenses: 1999
+`)
+    })
+
+    it(`should print the correct output for a lunch expense at limit`, () => {
+        let interceptedOutput = ""
+        jest.spyOn(process.stdout, "write").mockImplementation((output: string): boolean => {
+            interceptedOutput += output
+            return true;
+        })
+        printReport([
+          new Expense({ key: Meals.Lunch, name: "Lunch" }, 2000)
+        ])
+        expect(interceptedOutput).toEqual(`Expenses: ${today}
+Lunch	2000	 
+Meal Expenses: 2000
+Total Expenses: 2000
+`)
+    })
+
+    it(`should print the correct output for a lunch expense over limit`, () => {
+        let interceptedOutput = ""
+        jest.spyOn(process.stdout, "write").mockImplementation((output: string): boolean => {
+            interceptedOutput += output
+            return true;
+        })
+        printReport([
+          new Expense({ key: Meals.Lunch, name: "Lunch" }, 2001)
+        ])
+        expect(interceptedOutput).toEqual(`Expenses: ${today}
+Lunch	2001	X
+Meal Expenses: 2001
+Total Expenses: 2001
 `)
     })
 
@@ -63,6 +95,8 @@ Total Expenses: 500
           new Expense({ key: Meals.Dinner, name: "Dinner" }, 5001),      // Over threshold, with marker
           new Expense({ key: Meals.Breakfast, name: "Breakfast" }, 1000),    // At threshold, no marker
           new Expense({ key: Meals.Breakfast, name: "Breakfast" }, 1001),    // Over threshold, with marker
+          new Expense({ key: Meals.Lunch, name: "Lunch" }, 2000),      // At threshold, no marker
+          new Expense({ key: Meals.Lunch, name: "Lunch" }, 2001),      // Over threshold, with marker
           new Expense({ key: "car-rental", name: "Car Rental" }, 5000),   // Non-meal expense
           new Expense({ key: Meals.Breakfast, name: "Breakfast" }, 500),     // Under threshold, no marker
         ])
@@ -72,10 +106,12 @@ Dinner	5000
 Dinner	5001	X
 Breakfast	1000	 
 Breakfast	1001	X
+Lunch	2000	 
+Lunch	2001	X
 Car Rental	5000	 
 Breakfast	500	 
-Meal Expenses: 12502
-Total Expenses: 17502
+Meal Expenses: 16503
+Total Expenses: 21503
 `)
 
     })
