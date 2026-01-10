@@ -1,4 +1,4 @@
-import { printHelloWorld, printReport, sumTwoValues, Expense } from './ExpenseReport'
+import { printHelloWorld, printReport, sumTwoValues, Expense, Meals } from './ExpenseReport'
 
 describe(`ExpenseReport`, () => {
     it(`should keep its original behavior`, () => {
@@ -8,9 +8,9 @@ describe(`ExpenseReport`, () => {
             return true;
         })
         printReport([
-          new Expense({ key: "dinner", name: "Dinner" }, 5001)
+          new Expense({ key: Meals.Dinner, name: "Dinner" }, 5001)
         ])
-        expect(interceptedOutput).toEqual(`Expenses: 2026-01-03
+        expect(interceptedOutput).toEqual(`Expenses: 2026-01-10
 Dinner	5001	X
 Meal Expenses: 5001
 Total Expenses: 5001
@@ -24,9 +24,9 @@ Total Expenses: 5001
             return true;
         })
         printReport([
-          new Expense({ key: "breakfast", name: "Breakfast" }, 1001)
+          new Expense({ key: Meals.Breakfast, name: "Breakfast" }, 1001)
         ])
-        expect(interceptedOutput).toEqual(`Expenses: 2026-01-03
+        expect(interceptedOutput).toEqual(`Expenses: 2026-01-10
 Breakfast	1001	X
 Meal Expenses: 1001
 Total Expenses: 1001
@@ -41,15 +41,15 @@ Total Expenses: 1001
         })
         
         printReport([
-          new Expense({ key: "dinner", name: "Dinner" }, 5000),      // At threshold, no marker
-          new Expense({ key: "dinner", name: "Dinner" }, 5001),      // Over threshold, with marker
-          new Expense({ key: "breakfast", name: "Breakfast" }, 1000),    // At threshold, no marker
-          new Expense({ key: "breakfast", name: "Breakfast" }, 1001),    // Over threshold, with marker
+          new Expense({ key: Meals.Dinner, name: "Dinner" }, 5000),      // At threshold, no marker
+          new Expense({ key: Meals.Dinner, name: "Dinner" }, 5001),      // Over threshold, with marker
+          new Expense({ key: Meals.Breakfast, name: "Breakfast" }, 1000),    // At threshold, no marker
+          new Expense({ key: Meals.Breakfast, name: "Breakfast" }, 1001),    // Over threshold, with marker
           new Expense({ key: "car-rental", name: "Car Rental" }, 5000),   // Non-meal expense
-          new Expense({ key: "breakfast", name: "Breakfast" }, 500),     // Under threshold, no marker
+          new Expense({ key: Meals.Breakfast, name: "Breakfast" }, 500),     // Under threshold, no marker
         ])
         
-        expect(interceptedOutput).toEqual(`Expenses: 2026-01-03
+        expect(interceptedOutput).toEqual(`Expenses: 2026-01-10
 Dinner	5000	 
 Dinner	5001	X
 Breakfast	1000	 

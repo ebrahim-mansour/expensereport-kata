@@ -74,5 +74,5 @@ function printReport(expenses: Expense[]): void {
   process.stdout.write("Total Expenses: " + totalExpenses + "\n")
 }
 
-export {sumTwoValues, printHelloWorld, printReport, Expense, ExpenseType}
+export {sumTwoValues, printHelloWorld, printReport, Expense, ExpenseType, Meals }
 
