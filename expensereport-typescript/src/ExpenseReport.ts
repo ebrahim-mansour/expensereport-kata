@@ -37,6 +37,25 @@ const EXPENSE_LIMITS = {
   LUNCH: 2000,
 }
 
+const MEAL_EXPENSE_TYPES = [Meals.Dinner, Meals.Breakfast, Meals.Lunch];
+
+function isMealExpense(expense: Expense): boolean {
+  return MEAL_EXPENSE_TYPES.includes(expense.key as Meals);
+}
+
+function isOverLimit(expense: Expense): boolean {
+  if (expense.key === Meals.Dinner) {
+    return expense.amount > EXPENSE_LIMITS.DINNER;
+  }
+  if (expense.key === Meals.Breakfast) {
+    return expense.amount > EXPENSE_LIMITS.BREAKFAST;
+  }
+  if (expense.key === Meals.Lunch) {
+    return expense.amount > EXPENSE_LIMITS.LUNCH;
+  }
+  return false;
+}
+
 class Expense {
   key: ExpenseType["key"]
   name: ExpenseType["name"]
@@ -49,23 +68,19 @@ class Expense {
   }
 
   get mealAndOverExpensesThreshold(): string {
-    const isDinnerOver = this.key === Meals.Dinner && this.amount > EXPENSE_LIMITS.DINNER;
-    const isBreakFastOver = this.key === Meals.Breakfast && this.amount > EXPENSE_LIMITS.BREAKFAST;
-    const isLunchOver = this.key === Meals.Lunch && this.amount > EXPENSE_LIMITS.LUNCH;
-    return isDinnerOver || isBreakFastOver || isLunchOver ? "X" : " ";
+    return isOverLimit(this) ? "X" : " ";
   }
 }
 
 function calculateMealExpenses(expense: Expense, mealExpenses: number) {
-  const isMeal = expense.key === Meals.Dinner || expense.key === Meals.Breakfast || expense.key === Meals.Lunch;
-  if (isMeal) {
+  if (isMealExpense(expense)) {
     mealExpenses += expense.amount;
   }
   return mealExpenses;
 }
 
-function printReport(expenses: Expense[]): void {
-  const { today, expensesData, mealExpenses, totalExpenses } = prepareReportData(expenses);
+function printReport(expenses: Expense[], date?: Date): void {
+  const { today, expensesData, mealExpenses, totalExpenses } = prepareReportData(expenses, date);
 
   process.stdout.write("Expenses: " + today + "\n");
   process.stdout.write(expensesData)
@@ -73,10 +88,10 @@ function printReport(expenses: Expense[]): void {
   process.stdout.write("Total Expenses: " + totalExpenses + "\n")
 }
 
-function prepareReportData(expenses: Expense[]) {
+function prepareReportData(expenses: Expense[], date?: Date) {
   let totalExpenses = 0;
   let mealExpenses = 0;
-  const today = new Date().toISOString().substr(0, 10);
+  const today = (date || new Date()).toISOString().substr(0, 10);
   ({ mealExpenses, totalExpenses } = calculateMealExpensesAndTotalExpenses(expenses, mealExpenses, totalExpenses));
   const expensesData = calculateExpensesData(expenses);
   return { today, expensesData, mealExpenses, totalExpenses };
