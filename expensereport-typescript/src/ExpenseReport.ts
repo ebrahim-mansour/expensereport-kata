@@ -65,7 +65,8 @@ function printReport(expenses: Expense[]): void {
   process.stdout.write("Expenses: " + today + "\n");
 
   for (const expense of expenses) {
-    process.stdout.write(expense.name + "\t" + expense.amount + "\t" + expense.mealAndOverExpensesThreshold + "\n")
+    const expenseData = expense.name + "\t" + expense.amount + "\t" + expense.mealAndOverExpensesThreshold + "\n";
+    process.stdout.write(expenseData)
   }
 
   process.stdout.write("Meal Expenses: " + mealExpenses + "\n")
