@@ -41,14 +41,14 @@ class Expense {
   }
 
   get mealAndOverExpensesThreshold(): string {
-    const isDinnerOver = this.key == Meals.Dinner && this.amount > DINNER_THRESHOLD;
-    const isBreakFastOver = this.key == Meals.Breakfast && this.amount > BREAKFAST_THRESHOLD;
+    const isDinnerOver = this.key === Meals.Dinner && this.amount > DINNER_THRESHOLD;
+    const isBreakFastOver = this.key === Meals.Breakfast && this.amount > BREAKFAST_THRESHOLD;
     return isDinnerOver || isBreakFastOver ? "X" : " ";
   }
 }
 
 function calculateMealExpenses(expense: Expense, mealExpenses: number) {
-  const isMeal = expense.key == Meals.Dinner || expense.key == Meals.Breakfast;
+  const isMeal = expense.key === Meals.Dinner || expense.key === Meals.Breakfast;
   if (isMeal) {
     mealExpenses += expense.amount;
   }
