@@ -78,8 +78,7 @@ function prepareReportData(expenses: Expense[]) {
 function calculateExpensesData(expenses: Expense[]) {
   let expensesData = "";
   for (const expense of expenses) {
-    const expenseData = expense.name + "\t" + expense.amount + "\t" + expense.mealAndOverExpensesThreshold + "\n";
-    expensesData += expenseData;
+    expensesData += expense.name + "\t" + expense.amount + "\t" + expense.mealAndOverExpensesThreshold + "\n";
   }
   return expensesData;
 }
