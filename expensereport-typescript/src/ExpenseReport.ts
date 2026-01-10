@@ -58,8 +58,9 @@ function calculateMealExpenses(expense: Expense, mealExpenses: number) {
 function printReport(expenses: Expense[]): void {
   let totalExpenses = 0
   let mealExpenses = 0
+  const today = new Date().toISOString().substr(0, 10);
 
-  process.stdout.write("Expenses: " + new Date().toISOString().substr(0, 10) + "\n")
+  process.stdout.write("Expenses: " + today + "\n")
 
   for (const expense of expenses) {
     mealExpenses = calculateMealExpenses(expense, mealExpenses);
