@@ -1,5 +1,7 @@
 import { printHelloWorld, printReport, sumTwoValues, Expense, Meals } from './ExpenseReport'
 
+const today = new Date().toISOString().substr(0, 10);
+
 describe(`ExpenseReport`, () => {
     it(`should keep its original behavior`, () => {
         let interceptedOutput = ""
@@ -10,7 +12,7 @@ describe(`ExpenseReport`, () => {
         printReport([
           new Expense({ key: Meals.Dinner, name: "Dinner" }, 5001)
         ])
-        expect(interceptedOutput).toEqual(`Expenses: 2026-01-10
+        expect(interceptedOutput).toEqual(`Expenses: ${today}
 Dinner	5001	X
 Meal Expenses: 5001
 Total Expenses: 5001
@@ -26,7 +28,7 @@ Total Expenses: 5001
         printReport([
           new Expense({ key: Meals.Breakfast, name: "Breakfast" }, 1001)
         ])
-        expect(interceptedOutput).toEqual(`Expenses: 2026-01-10
+        expect(interceptedOutput).toEqual(`Expenses: ${today}
 Breakfast	1001	X
 Meal Expenses: 1001
 Total Expenses: 1001
@@ -49,7 +51,7 @@ Total Expenses: 1001
           new Expense({ key: Meals.Breakfast, name: "Breakfast" }, 500),     // Under threshold, no marker
         ])
         
-        expect(interceptedOutput).toEqual(`Expenses: 2026-01-10
+        expect(interceptedOutput).toEqual(`Expenses: ${today}
 Dinner	5000	 
 Dinner	5001	X
 Breakfast	1000	 
