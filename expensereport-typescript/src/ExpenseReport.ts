@@ -71,8 +71,6 @@ function printReport(expenses: Expense[]): void {
   process.stdout.write("Total Expenses: " + totalExpenses + "\n")
 }
 
-export {sumTwoValues, printHelloWorld, printReport, Expense, ExpenseType, Meals }
-
 function prepareReportData(expenses: Expense[]) {
   let totalExpenses = 0;
   let mealExpenses = 0;
@@ -98,3 +96,4 @@ function calculateMealExpensesAndTotalExpenses(expenses: Expense[], mealExpenses
   return { mealExpenses, totalExpenses };
 }
 
+export {sumTwoValues, printHelloWorld, printReport, Expense, ExpenseType, Meals }
