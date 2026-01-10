@@ -64,16 +64,23 @@ function printReport(expenses: Expense[]): void {
 
   process.stdout.write("Expenses: " + today + "\n");
 
-  for (const expense of expenses) {
-    const expenseData = expense.name + "\t" + expense.amount + "\t" + expense.mealAndOverExpensesThreshold + "\n";
-    process.stdout.write(expenseData)
-  }
+  const expensesData = calculateExpensesData(expenses);
+  process.stdout.write(expensesData)
 
   process.stdout.write("Meal Expenses: " + mealExpenses + "\n")
   process.stdout.write("Total Expenses: " + totalExpenses + "\n")
 }
 
 export {sumTwoValues, printHelloWorld, printReport, Expense, ExpenseType, Meals }
+
+function calculateExpensesData(expenses: Expense[]) {
+  let expensesData = "";
+  for (const expense of expenses) {
+    const expenseData = expense.name + "\t" + expense.amount + "\t" + expense.mealAndOverExpensesThreshold + "\n";
+    expensesData += expenseData;
+  }
+  return expensesData;
+}
 
 function calculateMealExpensesAndTotalExpenses(expenses: Expense[], mealExpenses: number, totalExpenses: number) {
   for (const expense of expenses) {
