@@ -59,14 +59,11 @@ function printReport(expenses: Expense[]): void {
   let totalExpenses = 0
   let mealExpenses = 0
   const today = new Date().toISOString().substr(0, 10);
-
   ({ mealExpenses, totalExpenses } = calculateMealExpensesAndTotalExpenses(expenses, mealExpenses, totalExpenses));
+  const expensesData = calculateExpensesData(expenses);
 
   process.stdout.write("Expenses: " + today + "\n");
-
-  const expensesData = calculateExpensesData(expenses);
   process.stdout.write(expensesData)
-
   process.stdout.write("Meal Expenses: " + mealExpenses + "\n")
   process.stdout.write("Total Expenses: " + totalExpenses + "\n")
 }
