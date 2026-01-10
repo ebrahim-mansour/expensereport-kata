@@ -60,9 +60,9 @@ function printReport(expenses: Expense[]): void {
   let mealExpenses = 0
   const today = new Date().toISOString().substr(0, 10);
 
-  process.stdout.write("Expenses: " + today + "\n");
-
   ({ mealExpenses, totalExpenses } = calculateMealExpensesAndTotalExpenses(expenses, mealExpenses, totalExpenses));
+
+  process.stdout.write("Expenses: " + today + "\n");
 
   for (const expense of expenses) {
     process.stdout.write(expense.name + "\t" + expense.amount + "\t" + expense.mealAndOverExpensesThreshold + "\n")
