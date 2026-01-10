@@ -6,26 +6,29 @@ const printHelloWorld = (): void => {
   process.stdout.write(message);
 }
 
-type ExpenseType = Dinner | Breakfast | Lunch | CarRental
-
 enum Meals {
   Dinner = "dinner",
   Breakfast = "breakfast",
   Lunch = "lunch"
 }
 
+type ExpenseType = Dinner | Breakfast | Lunch | CarRental
+
 type Dinner = {
   key: Meals.Dinner,
   name: "Dinner"
 }
+
 type Breakfast = {
   key: Meals.Breakfast
   name: "Breakfast"
 }
+
 type Lunch = {
   key: Meals.Lunch
   name: "Lunch"
 }
+
 type CarRental = {
   key: "car-rental"
   name: "Car Rental"
@@ -38,6 +41,22 @@ const EXPENSE_LIMITS = {
 }
 
 const MEAL_EXPENSE_TYPES = [Meals.Dinner, Meals.Breakfast, Meals.Lunch];
+
+class Expense {
+  key: ExpenseType["key"]
+  name: ExpenseType["name"]
+  amount: number
+  mealOverExpensesMarker: string
+  constructor(type: ExpenseType, amount: number) {
+    this.key = type.key
+    this.name = type.name
+    this.amount = amount
+  }
+
+  get mealAndOverExpensesThreshold(): string {
+    return isOverLimit(this) ? "X" : " ";
+  }
+}
 
 function isMealExpense(expense: Expense): boolean {
   return MEAL_EXPENSE_TYPES.includes(expense.key as Meals);
@@ -54,22 +73,6 @@ function isOverLimit(expense: Expense): boolean {
     return expense.amount > EXPENSE_LIMITS.LUNCH;
   }
   return false;
-}
-
-class Expense {
-  key: ExpenseType["key"]
-  name: ExpenseType["name"]
-  amount: number
-  mealOverExpensesMarker: string
-  constructor(type: ExpenseType, amount: number) {
-    this.key = type.key
-    this.name = type.name
-    this.amount = amount
-  }
-
-  get mealAndOverExpensesThreshold(): string {
-    return isOverLimit(this) ? "X" : " ";
-  }
 }
 
 function calculateMealExpenses(expense: Expense, mealExpenses: number) {
